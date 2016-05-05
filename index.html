@@ -7,7 +7,7 @@
 
 		<title>Wethington_DataViz Presentation</title>
 		<!-- <link rel="shortcut icon" type="image/x-icon" href="images/globe.ico?"> -->
-		<link rel="shortcut icon" type="image/x-icon" href="{{ "images/globe.ico" | prepend: site.baseurl }}"
+		<link rel="icon" type="image/x-icon" href="{{ "images/favicon.ico" | prepend: site.baseurl }}"
 		<meta name="description" content="Portfolio Presentation for AS.470.673.51 - Data Visualization">
 		<meta name="author" content="Travis Wethington">
 
@@ -123,7 +123,7 @@
 						<img src="images/gtd_type.gif" style="width: 100%; border: none;"></a>
 					</section>
 					<section>
-						<div id="gtd-ts" style="min-width: 310px; height: 400px; margin: auto"></div>
+						<div id="gtd-ts" style="min-width: 310px; height: 700px; margin: auto"></div>
 					</section>
 				</section>
 
@@ -289,235 +289,240 @@
 					{ src: 'plugin/notes/notes.js', async: true }
 				]
 			});
+			Reveal.addEventListener( 'slidechanged', function( event ) {
+			    Highcharts.gtd-ts.redraw(),
+			    Highcharts.origins.redraw(),
+			    Highcharts.hosts.redraw()
+			} );
 
 		</script>
 
-<script type="text/javascript">
-$(function () {
-      $('#gtd-ts').highcharts({
-          credits: {
-              text: 'Sources: Global Terrorism Database (Data) , Highcharts (Javascript) | Travis Wethington',
-              href: null
-          },
-
-          chart: {
-              zoomType: 'x'
-          },
-          title: {
-              text: 'Terrorism Events by Year, 1970-2014'
-          },
-          subtitle: {
-              text: document.ontouchstart === undefined ?
-                      'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-          },
-          yAxis: {
-              min: 0,
-              title: {
-                  text: 'Total Events'
-              }
-          },
-          legend: {
-              enabled: false
-          },
-          plotOptions: {
-              area: {
-                  fillColor: {
-                      linearGradient: {
-                          x1: 0,
-                          y1: 0,
-                          x2: 0,
-                          y2: 1
-                      },
-                      stops: [
-                          [0, Highcharts.getOptions().colors[0]],
-                          [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                      ]
-                  },
-                  marker: {
-                      radius: 2
-                  },
-                  lineWidth: 1,
-                  states: {
-                      hover: {
-                          lineWidth: 1
-                      }
-                  },
-                  threshold: null
-              }
-          },
-          series: [{
-              type: 'area',
-              name: 'Events',
-              data: [
-					  [1971,470],
-					  [1972,494],
-					  [1973,473],
-					  [1974,580],
-					  [1975,741],
-					  [1976,923],
-					  [1977,1318],
-					  [1978,1526],
-					  [1979,2661],
-					  [1980,2663],
-					  [1981,2585],
-					  [1982,2546],
-					  [1983,2871],
-					  [1984,3494],
-					  [1985,2917],
-					  [1986,2861],
-					  [1987,3185],
-					  [1988,3721],
-					  [1989,4322],
-					  [1990,3887],
-					  [1991,4683],
-					  [1992,5077],
-					  [1993,4954],
-					  [1994,3459],
-					  [1995,3083],
-					  [1996,3058],
-					  [1997,3204],
-					  [1998,933],
-					  [1999,1396],
-					  [2000,1814],
-					  [2001,1907],
-					  [2002,1332],
-					  [2003,1262],
-					  [2004,1161],
-					  [2005,2014],
-					  [2006,2751],
-					  [2007,3241],
-					  [2008,4788],
-					  [2009,4722],
-					  [2010,4819],
-					  [2011,5065],
-					  [2012,8491],
-					  [2013,11999],
-					  [2014,16818]
-			]
-          }]
-      });
-      // Make monochrome colors and set them as default for all funnels
-      Highcharts.getOptions().plotOptions.funnel.colors = (function () {
-        var colors = [],
-            base = Highcharts.getOptions().colors[10],
-            i;
-
-        for (i = 0; i < 10; i += 1) {
-            // Start out with a darkened base color (negative brighten), and end
-            // up with a much brighter color
-            colors.push(Highcharts.Color(base).brighten((i - 8) / 10).get());
-        }
-        return colors;
-      }());
-	    $('#origins').highcharts({
-	        credits: {
-	              text: null,
+	<script type="text/javascript">
+	$(function () {
+	      $('#gtd-ts').highcharts({
+	          credits: {
+	              text: 'Sources: Global Terrorism Database (Data) , Highcharts (Javascript) | Travis Wethington',
 	              href: null
-	        },
-	        chart: {
-	            type: 'funnel',
-	            marginRight: 100,
-	            inverted: true
-	        },
-	        title: {
-	            text: 'Top 10 Refugee Origins, Overall 1951-2014',
-	            x: -50
-	        },
-	        subtitle: {
-	            text: 'Countries with Refugees Funneling Out (Millions)',
-	            x: -50
-	        },
-	        plotOptions: {
-	            series: {
-	                dataLabels: {
-	                    enabled: true,
-	                    format: '<b>{point.name}</b> ({point.y:,.1f})',
-	                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
-	                    softConnector: true
-	                },
-	                neckWidth: '35%',
-	                neckHeight: '20%'
+	          },
 
-	                //-- Other available options
-	                // height: pixels or percent
-	                // width: pixels or percent
-	            }
-	        },
-	        legend: {
-	            enabled: false
-	        },
-	        series: [{
-	            name: 'Refugees',
-	            data: [
-					['Afghanistan', 146.7],
-					//['Various/Unknown', 97.5],
-					['Iraq', 50],
-					['Colombia', 47.7],
-					['Dem. Rep. of the Congo', 33.7],
-					['Sudan', 33.6],
-					['Somalia', 29.3],
-					['Syria', 26.9],
-					['Ethiopia', 25.1],
-					['Angola', 20.1],
-					['Bosnia and Herzegovina', 19.8]
-	            ]
-	        }]
-	    });
+	          chart: {
+	              zoomType: 'x'
+	          },
+	          title: {
+	              text: 'Terrorism Events by Year, 1970-2014'
+	          },
+	          subtitle: {
+	              text: document.ontouchstart === undefined ?
+	                      'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+	          },
+	          yAxis: {
+	              min: 0,
+	              title: {
+	                  text: 'Total Events'
+	              }
+	          },
+	          legend: {
+	              enabled: false
+	          },
+	          plotOptions: {
+	              area: {
+	                  fillColor: {
+	                      linearGradient: {
+	                          x1: 0,
+	                          y1: 0,
+	                          x2: 0,
+	                          y2: 1
+	                      },
+	                      stops: [
+	                          [0, Highcharts.getOptions().colors[0]],
+	                          [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+	                      ]
+	                  },
+	                  marker: {
+	                      radius: 2
+	                  },
+	                  lineWidth: 1,
+	                  states: {
+	                      hover: {
+	                          lineWidth: 1
+	                      }
+	                  },
+	                  threshold: null
+	              }
+	          },
+	          series: [{
+	              type: 'area',
+	              name: 'Events',
+	              data: [
+						  [1971,470],
+						  [1972,494],
+						  [1973,473],
+						  [1974,580],
+						  [1975,741],
+						  [1976,923],
+						  [1977,1318],
+						  [1978,1526],
+						  [1979,2661],
+						  [1980,2663],
+						  [1981,2585],
+						  [1982,2546],
+						  [1983,2871],
+						  [1984,3494],
+						  [1985,2917],
+						  [1986,2861],
+						  [1987,3185],
+						  [1988,3721],
+						  [1989,4322],
+						  [1990,3887],
+						  [1991,4683],
+						  [1992,5077],
+						  [1993,4954],
+						  [1994,3459],
+						  [1995,3083],
+						  [1996,3058],
+						  [1997,3204],
+						  [1998,933],
+						  [1999,1396],
+						  [2000,1814],
+						  [2001,1907],
+						  [2002,1332],
+						  [2003,1262],
+						  [2004,1161],
+						  [2005,2014],
+						  [2006,2751],
+						  [2007,3241],
+						  [2008,4788],
+						  [2009,4722],
+						  [2010,4819],
+						  [2011,5065],
+						  [2012,8491],
+						  [2013,11999],
+						  [2014,16818]
+				]
+	          }]
+	      });
+	      // Make monochrome colors and set them as default for all funnels
+	      Highcharts.getOptions().plotOptions.funnel.colors = (function () {
+	        var colors = [],
+	            base = Highcharts.getOptions().colors[10],
+	            i;
 
-	    $('#hosts').highcharts({
-	        credits: {
-	              text: 'Sources: UNHCR (Data) , Highcharts (Javascript) | Visualization: Travis Wethington',
-	              href: null
-	        },
-	        chart: {
-	            type: 'funnel',
-	            marginRight: 100
-	        },
-	        title: {
-	            text: 'Top 10 Asylum Hosts for Refugees, Overall 1951-2014',
-	            x: -50
-	        },
-	        subtitle: {
-	            text: 'Countries with Refugees Funneling In (Millions)',
-	            x: -50
-	        },
-	        plotOptions: {
-	            series: {
-	                dataLabels: {
-	                    enabled: true,
-	                    format: '<b>{point.name}</b> ({point.y:,.1f})',
-	                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
-	                    softConnector: true
-	                },
-	                neckWidth: '65%',
-	                neckHeight: '80%'
+	        for (i = 0; i < 10; i += 1) {
+	            // Start out with a darkened base color (negative brighten), and end
+	            // up with a much brighter color
+	            colors.push(Highcharts.Color(base).brighten((i - 8) / 10).get());
+	        }
+	        return colors;
+	      }());
+		    $('#origins').highcharts({
+		        credits: {
+		              text: null,
+		              href: null
+		        },
+		        chart: {
+		            type: 'funnel',
+		            marginRight: 100,
+		            inverted: true
+		        },
+		        title: {
+		            text: 'Top 10 Refugee Origins, Overall 1951-2014',
+		            x: -50
+		        },
+		        subtitle: {
+		            text: 'Countries with Refugees Funneling Out (Millions)',
+		            x: -50
+		        },
+		        plotOptions: {
+		            series: {
+		                dataLabels: {
+		                    enabled: true,
+		                    format: '<b>{point.name}</b> ({point.y:,.1f})',
+		                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+		                    softConnector: true
+		                },
+		                neckWidth: '35%',
+		                neckHeight: '20%'
 
-	                //-- Other available options
-	                // height: pixels or percent
-	                // width: pixels or percent
-	            }
-	        },
-	        legend: {
-	            enabled: false
-	        },
-	        series: [{
-	            name: 'Asylum Seekers',
-	            data: [
-					['Somalia', 23.3],
-					['Iraq', 23.7],
-					['Syria', 26.6],
-					['Germany', 31],
-					['United States', 34.1],
-					['Sudan', 37.1],
-					['Colombia', 42.7],
-					['Dem. Rep. of the Congo', 47.4],
-					['Iran', 69.7],
-					['Pakistan', 84]
-	            ]
-	        }]
-	    });
-  });
-</script>
+		                //-- Other available options
+		                // height: pixels or percent
+		                // width: pixels or percent
+		            }
+		        },
+		        legend: {
+		            enabled: false
+		        },
+		        series: [{
+		            name: 'Refugees',
+		            data: [
+						['Afghanistan', 146.7],
+						//['Various/Unknown', 97.5],
+						['Iraq', 50],
+						['Colombia', 47.7],
+						['Dem. Rep. of the Congo', 33.7],
+						['Sudan', 33.6],
+						['Somalia', 29.3],
+						['Syria', 26.9],
+						['Ethiopia', 25.1],
+						['Angola', 20.1],
+						['Bosnia and Herzegovina', 19.8]
+		            ]
+		        }]
+		    });
+
+		    $('#hosts').highcharts({
+		        credits: {
+		              text: 'Sources: UNHCR (Data) , Highcharts (Javascript) | Visualization: Travis Wethington',
+		              href: null
+		        },
+		        chart: {
+		            type: 'funnel',
+		            marginRight: 100
+		        },
+		        title: {
+		            text: 'Top 10 Asylum Hosts for Refugees, Overall 1951-2014',
+		            x: -50
+		        },
+		        subtitle: {
+		            text: 'Countries with Refugees Funneling In (Millions)',
+		            x: -50
+		        },
+		        plotOptions: {
+		            series: {
+		                dataLabels: {
+		                    enabled: true,
+		                    format: '<b>{point.name}</b> ({point.y:,.1f})',
+		                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+		                    softConnector: true
+		                },
+		                neckWidth: '65%',
+		                neckHeight: '80%'
+
+		                //-- Other available options
+		                // height: pixels or percent
+		                // width: pixels or percent
+		            }
+		        },
+		        legend: {
+		            enabled: false
+		        },
+		        series: [{
+		            name: 'Asylum Seekers',
+		            data: [
+						['Somalia', 23.3],
+						['Iraq', 23.7],
+						['Syria', 26.6],
+						['Germany', 31],
+						['United States', 34.1],
+						['Sudan', 37.1],
+						['Colombia', 42.7],
+						['Dem. Rep. of the Congo', 47.4],
+						['Iran', 69.7],
+						['Pakistan', 84]
+		            ]
+		        }]
+		    });
+	  });
+	</script>
 
 	</body>
 </html>
